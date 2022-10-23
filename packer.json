@@ -9,7 +9,7 @@
         "access_key": "{{user `aws_access_key`}}",
         "ami_name": " miniprj _xxxxx_ami",
         "instance_type": "t2.micro", 
-        "region": "eu-central-1",
+        "region": "us-west-2",
         "secret_key": "{{user `aws_secret_key`}}",                    
 "source_ami_filter": {
         "filters": {  

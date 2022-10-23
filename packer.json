@@ -2,7 +2,7 @@
  "variables": 
   { "aws_access_key": "",
     "aws_secret_key": "",  
-    "region": "eu-central-1"    
+    "region": "us-west-2"    
  },    
  "builders": [   
       { 

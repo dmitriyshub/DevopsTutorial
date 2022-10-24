@@ -2,6 +2,11 @@ variable "region_name" {
     description = "my region name"
     default = "us-east-1"
 }
+variable "availability_zone" {
+    description = "my az name"
+    default = "us-east-1a"
+  
+}
 
 variable "ec2_type" {
     description = "instance type"

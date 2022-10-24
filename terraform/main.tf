@@ -44,7 +44,7 @@ resource "aws_instance" "jenkins_ec2" {
         subnet_id = aws_subnet.vpc_subnet1_public.id # attach ec2 to subnet
         associate_public_ip_address = true # get automatic public ip
         #vpc_security_vpc_security_group_ids = [aws_security_group.public_security_group.id]
-        security_groups = [aws_security_group.public_security_group.name]
+        security_groups = [aws_security_group.public_security_group.id]
         
         tags = { 
          Name = var.my_tag

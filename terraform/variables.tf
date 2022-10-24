@@ -10,7 +10,7 @@ variable "ec2_type" {
 
 variable "ami_id" {
     description = "jenkins_ami_id"
-    default = ""
+    default = "ami-05375dec5f41f6727"
 }
 
 variable "my_tag" {
@@ -19,6 +19,6 @@ variable "my_tag" {
 }
 
 variable "my_tag_env" {
-    description = "env tag"
-    default = "terraform"
+    description = "environment tag"
+    default = "dev"
 }

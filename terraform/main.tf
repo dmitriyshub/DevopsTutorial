@@ -114,6 +114,29 @@ resource "aws_route_table_association" "subnet_public_assosiacion1" {
   route_table_id = aws_route_table.vpc_route_table_public.id
 }
 
-output "public_dns" {
-  value = "http://${aws_instance.jenkins_ec2.public_dns}:8080"
-}
+
+
+
+# output "public_dns" {
+#   value = "http://${aws_instance.jenkins_ec2.public_dns}:8080"
+# }
+
+# resource "aws_s3_bucket" "s3_bucket" {
+#   bucket = "my-tf-test-bucket"
+
+#   tags = {
+#     Name        = "My bucket"
+#     Environment = "Dev"
+#   }
+# }
+
+# resource "aws_s3_bucket_acl" "s3_bucket_acl" {
+#   bucket = aws_s3_bucket.s3_bucket.id
+#   acl    = "private"
+# }
+# output "s3_domain_name" {
+#     value = aws_s3_bucket.s3_bucket.bucket_domain_name
+# }
+# output "s3_arn" {
+#     value = aws_s3_bucket.s3_bucket.arn
+# }

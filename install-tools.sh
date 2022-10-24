@@ -29,5 +29,3 @@ sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sour
 sudo apt-get update 
 sudo apt-get install jenkins -y 
 sudo apt-get install awscli -y
-
-

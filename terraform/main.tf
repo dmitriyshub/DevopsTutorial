@@ -1,7 +1,7 @@
 provider "aws" { 
         region = var.region_name 
 } 
-
+# VPC
 resource "aws_vpc" "vpc" { # terraform id&name
   cidr_block = "172.16.0.0/16" # specify the network
   enable_dns_support = true
@@ -25,7 +25,7 @@ resource "aws_subnet" "vpc_subnet1_public" { # terraform id&name
     Env = var.my_tag_env
   }
 }
-
+# KEY PAIR
 resource "aws_key_pair" "new_key" { 
   key_name= "jenkinskey" 
   public_key = "${file("jenkinskey.pub")}"
@@ -34,7 +34,7 @@ resource "aws_key_pair" "new_key" {
     Env = var.my_tag_env
   }
 } 
- 
+ # EC2
 resource "aws_instance" "jenkins_ec2" { 
         ami = var.ami_id
         instance_type = var.ec2_type 
@@ -83,7 +83,6 @@ resource "aws_security_group" "public_security_group" { # terraform id&name
   }
 }
 
-#################################################################
 # Route Table for VPC PUBLIC
 resource "aws_route_table" "vpc_route_table_public" {
   vpc_id = aws_vpc.vpc.id # attach to vpc
@@ -98,7 +97,6 @@ resource "aws_route_table" "vpc_route_table_public" {
     Env = var.my_tag_env
   }
 }
-#################################################################
 # Internet Gateway for VPC
 resource "aws_internet_gateway" "vpc_internet_gateway" { # terraform id&name
   vpc_id = aws_vpc.vpc.id # attach to vpc
@@ -117,9 +115,9 @@ resource "aws_route_table_association" "subnet_public_assosiacion1" {
 
 
 
-# output "public_dns" {
-#   value = "http://${aws_instance.jenkins_ec2.public_dns}:8080"
-# }
+output "public_dns" {
+  value = "http://${aws_instance.jenkins_ec2.public_dns}:8080"
+}
 
 # resource "aws_s3_bucket" "s3_bucket" {
 #   bucket = "my-tf-test-bucket"

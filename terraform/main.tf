@@ -1,6 +1,9 @@
 provider "aws" { 
         region = var.region_name 
 } 
+
+/*
+
 # VPC
 resource "aws_vpc" "vpc" { # terraform id&name
   cidr_block = "172.16.0.0/16" # specify the network
@@ -116,6 +119,8 @@ resource "aws_route_table_association" "subnet_public_assosiacion1" {
 output "public_dns" {
   value = "http://${aws_instance.jenkins_ec2.public_dns}:8080"
 }
+*/
+
 
 # resource "aws_s3_bucket" "s3_bucket" {
 #   bucket = "my-tf-test-bucket"

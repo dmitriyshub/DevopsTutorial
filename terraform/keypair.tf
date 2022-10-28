@@ -14,3 +14,9 @@ resource "null_resource" "key-perm" {
     command = "chmod 400 ~/.ssh/${var.key_name}.pem"
   }
 }
+module "key_pair" {
+  source = "terraform-aws-modules/key-pair/aws"
+
+  key_name   = "my_key"
+  public_key = tls_private_key.ec2_private_key.public_key_openssh
+}

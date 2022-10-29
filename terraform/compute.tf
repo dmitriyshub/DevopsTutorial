@@ -9,6 +9,7 @@ resource "aws_instance" "myWebOS" {
         Name = "webOS"
     }
 }
+/*
 // Launching Jenkins EC2 instance
 resource "aws_instance" "myJenkins" {
     ami = "ami-0e715ffa270f2c915"
@@ -20,6 +21,7 @@ resource "aws_instance" "myJenkins" {
         Name = "Jenkins"
     }
 }
+*/
 // Creating EBS volume
 resource "aws_ebs_volume" "myWebVol" {
   availability_zone = "${aws_instance.myWebOS.availability_zone}"

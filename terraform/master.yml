@@ -26,18 +26,43 @@
       become_method: sudo
       become_user: root
 
-    - name: Create a new primary partition with a size of 1GiB
-      parted:
-        device: /dev/xvdc
-        number: 1
-        state: present
-        part_end: 500MiB
 
-    - name: Format the partition, mount it to the /var/www/html
-      shell: |
-        mkfs -t ext4 /dev/xvdc1
-        mount /dev/xvdc1 /var/www/html
+    - name: Install AWS EFS tools utilities
+      command: yum install -y amazon-efs-utils
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Mounting EFS at /var/www/html
+      command: mount -t efs {{ file_sys_id }}:/ /var/www/html
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Edit fstab so EFS automatically loads on reboot
+      command: echo {{ file_sys_id }}:/ /var/www/html efs defaults,_netdev 0 0 >> /etc/fstab
+      become: yes
+      become_method: sudo
+      become_user: root
+
     - name: Copy the code from github to the /var/www/html
       shell: |
         cd /var/www/html
-        git clone https://github.com/dmitriyshub/DevopsTutorial.git
+        git clone https://github.com/cankush625/Web.git
+
+
+    # - name: Create a new primary partition with a size of 1GiB
+    #   parted:
+    #     device: /dev/xvdc
+    #     number: 1
+    #     state: present
+    #     part_end: 500MiB
+
+    # - name: Format the partition, mount it to the /var/www/html
+    #   shell: |
+    #     mkfs -t ext4 /dev/xvdc1
+    #     mount /dev/xvdc1 /var/www/html
+    # - name: Copy the code from github to the /var/www/html
+    #   shell: |
+    #     cd /var/www/html
+    #     git clone https://github.com/dmitriyshub/DevopsTutorial.git

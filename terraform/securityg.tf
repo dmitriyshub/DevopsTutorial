@@ -26,9 +26,9 @@ resource "aws_security_group" "allow_tcp" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    description = "Jenkins from VPC"
-    from_port   = 8080
-    to_port     = 8080
+    description = "NFS from VPC"
+    from_port   = 2049
+    to_port     = 2049
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

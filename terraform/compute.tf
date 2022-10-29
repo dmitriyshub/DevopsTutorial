@@ -23,25 +23,51 @@ resource "aws_instance" "myJenkins" {
 }
 */
 // Creating EBS volume
-resource "aws_ebs_volume" "myWebVol" {
-  availability_zone = "${aws_instance.myWebOS.availability_zone}"
-  size              = 1
+# resource "aws_ebs_volume" "myWebVol" {
+#   availability_zone = "${aws_instance.myWebOS.availability_zone}"
+#   size              = 1
+
+#   tags = {
+#       Name = "ebs-vol"
+#       Pro = var.my_tag
+#       Env = var.my_tag_env
+#   }
+# }
+
+# // Attaching above volume to the EC2 instance
+# resource "aws_volume_attachment" "myWebVolAttach" {
+#   depends_on = [
+#         aws_ebs_volume.myWebVol,
+#   ]
+
+#   device_name = "/dev/sdc"
+#   volume_id = "${aws_ebs_volume.myWebVol.id}"
+#   instance_id = "${aws_instance.myWebOS.id}"
+#   skip_destroy = true
+# }
+
+
+
+
+
+
+
+
+// Creating EFS
+resource "aws_efs_file_system" "myWebEFS" {
+  creation_token = "myWebFile"
 
   tags = {
-      Name = "ebs-vol"
+      Name = "efs-vol"
       Pro = var.my_tag
       Env = var.my_tag_env
   }
 }
 
-// Attaching above volume to the EC2 instance
-resource "aws_volume_attachment" "myWebVolAttach" {
-  depends_on = [
-        aws_ebs_volume.myWebVol,
-  ]
-
-  device_name = "/dev/sdc"
-  volume_id = "${aws_ebs_volume.myWebVol.id}"
-  instance_id = "${aws_instance.myWebOS.id}"
-  skip_destroy = true
+// Mounting EFS
+resource "aws_efs_mount_target" "mountefs" {
+  file_system_id  = "${aws_efs_file_system.myWebEFS.id}"
+  subnet_id       = aws_subnet.vpc_subnet1_public.id
+  security_groups = ["${aws_security_group.allow_tcp.id}",]
 }
+

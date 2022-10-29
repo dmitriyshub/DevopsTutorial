@@ -26,5 +26,5 @@ resource "aws_s3_bucket_public_access_block" "s3BlockPublicAccess" {
 
 //
 locals {
-  s3_origin_id = "myS3Origin"
+  s3_origin_id = aws_s3_bucket.my_bucket.id
 }

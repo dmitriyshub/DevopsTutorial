@@ -32,3 +32,8 @@ variable "key_name" {
   description = "environment tag"
   default     = "my_key"
 }
+
+variable "bucket_name" {
+  description = "bucket name "
+  default     = "bucket-test-dmitriyshub"
+}

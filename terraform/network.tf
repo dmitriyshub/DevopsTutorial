@@ -62,7 +62,8 @@ resource "aws_route_table_association" "subnet_public_assosiacion1" {
 output "public_dns_WebOs" {
   value = "http://${aws_instance.myWebOS.public_dns}:80"
 }
-
+/*
 output "public_dns_Jenkins" {
   value = "http://${aws_instance.myJenkins.public_dns}:8080"
 }
+*/

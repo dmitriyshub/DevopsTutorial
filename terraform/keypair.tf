@@ -2,7 +2,7 @@ resource "tls_private_key" "ec2_private_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
   provisioner "local-exec" {
-    command = "echo '${tls_private_key.ec2_private_key.private_key_pem}' > ~/.ssh/${var.key_name}.pem"
+    command = "echo '${tls_private_key.ec2_private_key.private_key_pem}' > /home/dimash/Temp/${var.key_name}.pem"
   }
 }
 
@@ -11,7 +11,7 @@ resource "null_resource" "key-perm" {
     tls_private_key.ec2_private_key,
   ]
   provisioner "local-exec" {
-    command = "chmod 400 ~/.ssh/${var.key_name}.pem"
+    command = "chmod 400 /home/dimash/Temp/${var.key_name}.pem"
   }
 }
 module "key_pair" {

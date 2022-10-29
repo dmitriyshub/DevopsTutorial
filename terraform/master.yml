@@ -40,4 +40,4 @@
     - name: Copy the code from github to the /var/www/html
       shell: |
         cd /var/www/html
-        git clone https://github.com/cankush625/Web.git
+        git clone https://github.com/dmitriyshub/DevopsTutorial.git

@@ -28,10 +28,10 @@ resource "aws_s3_bucket_policy" "s3BucketPolicy" {
 
 //
 resource "aws_s3_bucket_object" "bucketObject" {
-  for_each = fileset("/home/cankush/Downloads/assets", "**/*.jpg")
+  for_each = fileset("/home/dimash/Downloads/assets", "**/*.jpg")
 
   bucket = "${aws_s3_bucket.my_bucket.bucket}"
   key    = each.value
-  source = "/home/cankush/Downloads/assets/${each.value}"
+  source = "/home/dimash/Downloads/assets/${each.value}"
   content_type = "image/jpg"
 }

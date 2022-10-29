@@ -28,9 +28,9 @@ resource "aws_s3_bucket_policy" "s3BucketPolicy" {
 
 //
 resource "aws_s3_object" "bucketObject" {
-  for_each = fileset("/home/dimash/Downloads/assets", "**/*.jpg")
+  for_each = fileset("/home/dimash/Source/DevopsTutorial/assets", "**/*.jpg")
   bucket = "${aws_s3_bucket.my_bucket.bucket}"
   key    = each.value
-  source = "/home/dimash/Downloads/assets/${each.value}"
+  source = "/home/dimash/Source/DevopsTutorial/assets/${each.value}"
   content_type = "image/jpg"
 }

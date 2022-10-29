@@ -2,6 +2,14 @@ provider "aws" {
         region = var.region_name 
 } 
 
+# terraform {
+#   backend "s3" {
+#     bucket = "bucket-test-dmitriyshub"
+#     key    = "terraform/backend/"
+#     region = "us-west-1"
+#   }
+# }
+
 /*
 
 # VPC

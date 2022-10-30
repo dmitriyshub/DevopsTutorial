@@ -30,7 +30,7 @@ resource "null_resource" "setupVol2" {
   ]
 
   //
-  provisioner "local-exec2" {
+  provisioner "local-exec" {
     command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ec2-user --private-key /home/dimash/Temp/${var.key_name}.pem -i '${aws_instance.myWebOS.public_ip},' master3.yml --extra-vars \"file_system_dns=${aws_efs_file_system.myWebEFS.dns_name}\""
   }
 }

@@ -71,3 +71,6 @@ resource "aws_efs_mount_target" "mountefs" {
   security_groups = ["${aws_security_group.allow_tcp.id}",]
 }
 
+output "efs_id" {
+  value = aws_efs_file_system.myWebEFS.id
+}

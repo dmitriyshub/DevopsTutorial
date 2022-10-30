@@ -8,7 +8,7 @@
       name: amazon-efs-utils
       state: latest
 # WAIT
-  - name: Pause for 5 minutes to build app cache
+  - name: Pause for 3 minutes to build app cache
     ansible.builtin.pause:
       minutes: 3
 # mount nfs

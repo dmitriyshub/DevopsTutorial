@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dmitriyshub/DevopsTutorial']]])            
+
+          }
+        }
+        stage ("terraform fmt") {
+            steps {
+                sh ('terraform -chdir=./terraform fmt') 
+            }
+        }
+        stage ("terraform init") {
+            steps {
+                sh ('terraform -chdir=./terraform init') 
+            }
+        }
+        
+        stage ("terraform Action") {
+            steps {
+                sh ('echo "Terraform action is --> apply"')
+                sh ('terraform -chdir=./terraform apply --auto-approve') 
+           }
+        }
+    }
+}

@@ -1,0 +1,98 @@
+- hosts: all
+  become: true
+  gather_facts: yes
+
+  vars:
+    aws_profile: default
+    aws_region: us-east-1
+    nfs_package: nfs-utils
+    #efs_file_system_id: {{ file_sys_id }}
+    efs_mount_dir: /var/www/html
+
+  tasks:
+    - name: Install httpd
+      command: yum install httpd -y
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Start httpd
+      command: systemctl start httpd
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Enable httpd
+      command: systemctl enable httpd
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Install git
+      command: yum install git -y
+      become: yes
+      become_method: sudo
+      become_user: root
+
+
+    - name: Install AWS EFS tools utilities
+      command: yum install -y amazon-efs-utils
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Ensure NFS is installed.
+      package: "name={{ nfs_package }} state=installed"
+
+    - name: Ensure mount directory exists.
+      file:
+        path: "{{ efs_mount_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: Get current AZ from AWS.
+      uri:
+        url: http://169.254.169.254/latest/meta-data/placement/availability-zone
+        return_content: yes
+      register: aws_current_az
+
+    - name: Ensure EFS volume is mounted.
+      mount:
+        name: "{{ efs_mount_dir }}"
+        src: "{{ aws_current_az.content }}.{{ file_sys_id }}.efs.{{ aws_region }}.amazonaws.com:/"
+        fstype: nfs4
+        opts: nfsvers=4.1
+        state: mounted
+
+    # Print the contents of the mount to the log.
+    - command: "ls -lah {{ efs_mount_dir }}"
+      register: efs_contents
+    - debug: var=efs_contents
+
+    - name: Edit fstab so EFS automatically loads on reboot
+      command: echo {{ file_sys_id }}:/ /var/www/html efs defaults,_netdev 0 0 >> /etc/fstab
+      become: yes
+      become_method: sudo
+      become_user: root
+
+    - name: Copy the code from github to the /var/www/html
+      shell: |
+        cd /var/www/html
+        git clone https://github.com/dmitriyshub/basicHtml.git
+
+
+    # - name: Create a new primary partition with a size of 1GiB
+    #   parted:
+    #     device: /dev/xvdc
+    #     number: 1
+    #     state: present
+    #     part_end: 500MiB
+
+    # - name: Format the partition, mount it to the /var/www/html
+    #   shell: |
+    #     mkfs -t ext4 /dev/xvdc1
+    #     mount /dev/xvdc1 /var/www/html
+    # - name: Copy the code from github to the /var/www/html
+    #   shell: |
+    #     cd /var/www/html
+    #     git clone https://github.com/dmitriyshub/DevopsTutorial.git

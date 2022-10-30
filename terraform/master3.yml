@@ -7,16 +7,21 @@
     yum:
       name: amazon-efs-utils
       state: latest
-# # mount nfs
-#   - name: mount nsf
-#     command: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport {{ file_system_dns }}:/ /var/www/html
-# # fstab entry
-#   - name: fstab entry
-#     command: "sudo su -c \"echo '{{ file_system_dns }}:/ /data nfs4 defaults,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 0 0' >> /etc/fstab\""
-# # echo fstab
-#   - name: echo fstab
-#     command: cat fstab 
-#     register: output
-#     args:
-#       chdir: /etc
-#   - debug: var=output.stdout_lines
+# mount nfs
+  - name: mount nsf
+    command: mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport {{ file_system_dns }}:/ /var/www/html
+# fstab entry
+  - name: fstab entry
+    command: "sudo su -c \"echo '{{ file_system_dns }}:/ /data nfs4 defaults,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 0 0' >> /etc/fstab\""
+# echo fstab
+  - name: echo fstab
+    command: cat fstab 
+    register: output
+    args:
+      chdir: /etc
+  - debug: var=output.stdout_lines
+
+  - name: Copy the code from github to the /var/www/html
+    shell: |
+      cd /var/www/html
+      git clone https://github.com/dmitriyshub/basicHtml.git

@@ -33,24 +33,24 @@
       become_method: sudo
       become_user: root
 
-    - name: Mounting EFS at /var/www/html
-      command: mount -t efs {{ file_sys_id }}:/ /var/www/html
-      become: yes
-      become_method: sudo
-      become_user: root
+    # - name: Mounting EFS at /var/www/html
+    #   command: mount -t efs -o tls {{ file_sys_id }}:/ /var/www/html
+    #   become: yes
+    #   become_method: sudo
+    #   become_user: root
 
-    - name: Edit fstab so EFS automatically loads on reboot
-      command: echo {{ file_sys_id }}:/ /var/www/html efs defaults,_netdev 0 0 >> /etc/fstab
-      become: yes
-      become_method: sudo
-      become_user: root
+    # - name: Edit fstab so EFS automatically loads on reboot
+    #   command: echo {{ file_sys_id }}:/ /var/www/html efs defaults,_netdev 0 0 >> /etc/fstab
+    #   become: yes
+    #   become_method: sudo
+    #   become_user: root
 
-    - name: Copy the code from github to the /var/www/html
-      shell: |
-        cd /var/www/html
-        git clone https://github.com/dmitriyshub/DevopsTutorial.git
+    # - name: Copy the code from github to the /var/www/html
+    #   shell: |
+    #     cd /var/www/html
+    #     git clone https://github.com/dmitriyshub/basicHtml.git
 
-
+###########################################################################
     # - name: Create a new primary partition with a size of 1GiB
     #   parted:
     #     device: /dev/xvdc
